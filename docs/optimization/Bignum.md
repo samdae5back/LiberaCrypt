@@ -193,11 +193,14 @@ zeroization.
 - Stage-2 schoolbook as a safe fallback if Karatsuba workspace allocation cannot
   be completed.
 
-The original Stage-2 multiplication implementation is retained as the internal
-`crypto_bignum_mul_stage2()` baseline/fallback rather than duplicated or
-rewritten. Generic `crypto_bignum_mod_mul()` routes through the production
-multiplication dispatch before reduction, so applicable public/general modular
-multiplication can receive the Stage-3 gain.
+The Stage-2 multiplication implementation is retained under the explicit
+source-level internal name `crypto_bignum_mul_schoolbook()`. The production
+`crypto_bignum_mul()` dispatcher calls that function for its baseline/fallback
+paths; no CMake compile-definition symbol rewriting is required. This keeps the
+same symbol graph for CMake, manual Makefile builds, IDEs, and static-analysis
+tools. Generic `crypto_bignum_mod_mul()` routes through the production
+multiplication dispatcher before reduction, so applicable public/general
+modular multiplication can receive the Stage-3 gain.
 
 ## Final production benchmark
 

@@ -3,6 +3,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+/* Feature-test macros must be visible before any system header. Linux needs
+ * the GNU feature set for getrandom() on older libc headers; other Unix-like
+ * targets only use POSIX.1-2001 interfaces in this translation unit. */
+#if defined(__linux__) && !defined(_GNU_SOURCE)
+#define _GNU_SOURCE
+#elif !defined(_WIN32) && !defined(_POSIX_C_SOURCE)
+#define _POSIX_C_SOURCE 200112L
+#endif
+
 #include "random_internal.h"
 
 #if defined(_WIN32)

@@ -5,22 +5,23 @@
 
 /**
  * @file LiberaCrypt.h
- * @brief Umbrella header for the complete public Crypto C API.
+ * @brief Umbrella header for the complete public LiberaCrypt C API.
  *
- * Include this header to use every supported API family.  Applications that
+ * Include this header to use every supported API family. Applications that
  * need a smaller declaration surface may instead include an individual public
- * header such as BlockCipher.h or HashFunction.h.
+ * header such as <LiberaCrypt/BlockCipher.h> or
+ * <LiberaCrypt/HashFunction.h>.
  *
- * @mainpage Crypto C API
+ * @mainpage LiberaCrypt C API
  *
  * The library exposes one operation-oriented API per cryptographic family.
- * Algorithms and parameter sets are selected at runtime with an LiberaCAlgID passed
- * as the final function argument.  Public functions are prefixed with
+ * Algorithms and parameter sets are selected at runtime with a LiberaCAlgID
+ * passed as the final function argument. Public functions are prefixed with
  * @c LIBERAC_, and failures are reported using LiberaCError status codes.
  *
  * @section crypto_quick_start Quick start
  * @code{.c}
- * #include <LiberaCrypt.h>
+ * #include <LiberaCrypt/LiberaCrypt.h>
  *
  * uint8_t digest[LIBERAC_SHA2_256_DIGEST_BYTES];
  * LiberaCError error = LIBERAC_HASH(
@@ -29,7 +30,7 @@
  * @endcode
  *
  * See each family header for buffer ownership, parameter-set sizes, and
- * algorithm-specific constraints.  The library does not allocate byte-array
+ * algorithm-specific constraints. The library does not allocate byte-array
  * output buffers on behalf of the caller; managed bignum and asymmetric-key
  * objects allocate their internal storage as needed.
  */
@@ -37,6 +38,7 @@
 #define LIBERAC_H
 
 #include "Def.h"
+#include "Version.h"
 #include "BlockCipher.h"
 #include "StreamCipher.h"
 #include "AuthenticatedEncryption.h"

@@ -111,11 +111,11 @@ static int bignum_add_shifted(uint32_t *out, size_t out_length,
 }
 
 /*
- * One portable Karatsuba split with Stage-2 schoolbook leaves.  The crossover
- * benchmark only established a stable win for equally sized operands at
- * 96 limbs (3072 significant bits) and above, so production dispatch stays
- * deliberately inside that measured domain instead of extrapolating to highly
- * unbalanced operands.
+ * One portable Karatsuba split with the schoolbook implementation as leaves.
+ * The crossover benchmark only established a stable win for equally sized
+ * operands at 96 limbs (3072 significant bits) and above, so production
+ * dispatch stays deliberately inside that measured domain instead of
+ * extrapolating to highly unbalanced operands.
  */
 static int bignum_mul_karatsuba_noalias(LiberaCBignum *out,
                                         const LiberaCBignum *a,
@@ -223,7 +223,7 @@ static int bignum_mul_karatsuba(LiberaCBignum *out,
         rc = bignum_mul_karatsuba_noalias(out, a, b);
         if (rc == 0)
             return 0;
-        return crypto_bignum_mul_stage2(out, a, b);
+        return crypto_bignum_mul_schoolbook(out, a, b);
     }
 
     crypto_bignum_init(&tmp);
@@ -237,7 +237,7 @@ static int bignum_mul_karatsuba(LiberaCBignum *out,
 
     if (rc == 0)
         return 0;
-    return crypto_bignum_mul_stage2(out, a, b);
+    return crypto_bignum_mul_schoolbook(out, a, b);
 }
 
 LiberaCError crypto_bignum_mul(LiberaCBignum *out,
@@ -250,5 +250,5 @@ LiberaCError crypto_bignum_mul(LiberaCBignum *out,
         a->LENGTH >= BIGNUM_KARATSUBA_THRESHOLD_LIMBS)
         return bignum_mul_karatsuba(out, a, b);
 
-    return crypto_bignum_mul_stage2(out, a, b);
+    return crypto_bignum_mul_schoolbook(out, a, b);
 }

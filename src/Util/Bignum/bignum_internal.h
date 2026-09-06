@@ -49,13 +49,13 @@ int crypto_bignum_is_zero(const LiberaCBignum *value);
 LiberaCError crypto_bignum_add(LiberaCBignum *out, const LiberaCBignum *a, const LiberaCBignum *b);
 LiberaCError crypto_bignum_sub(LiberaCBignum *out, const LiberaCBignum *a, const LiberaCBignum *b);
 
-/* Stage 3 keeps the exact Stage-2 schoolbook implementation available as an
- * internal baseline/fallback and dispatches to one-level Karatsuba only inside
- * the measured equal-width domain.  96 limbs == 3072 significant bits. */
+/* Stage 3 keeps the Stage-2 schoolbook implementation available under an
+ * explicit source-level name and dispatches to one-level Karatsuba only inside
+ * the measured equal-width domain. 96 limbs == 3072 significant bits. */
 #define BIGNUM_KARATSUBA_THRESHOLD_LIMBS 96u
-LiberaCError crypto_bignum_mul_stage2(LiberaCBignum *out,
-                                      const LiberaCBignum *a,
-                                      const LiberaCBignum *b);
+int crypto_bignum_mul_schoolbook(LiberaCBignum *out,
+                                 const LiberaCBignum *a,
+                                 const LiberaCBignum *b);
 LiberaCError crypto_bignum_mul(LiberaCBignum *out, const LiberaCBignum *a, const LiberaCBignum *b);
 LiberaCError crypto_bignum_square(LiberaCBignum *out, const LiberaCBignum *a);
 LiberaCError crypto_bignum_mod(LiberaCBignum *out, const LiberaCBignum *a, const LiberaCBignum *modulus);

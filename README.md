@@ -58,10 +58,10 @@ find_package(LiberaCrypt CONFIG REQUIRED)
 target_link_libraries(your_target PRIVATE LiberaCrypt::LiberaCrypt)
 ```
 
-The umbrella header exposes the public API:
+Installed public headers live below the `LiberaCrypt/` namespace. The umbrella header exposes the complete public API:
 
 ```c
-#include <LiberaCrypt.h>
+#include <LiberaCrypt/LiberaCrypt.h>
 ```
 
 A runtime-selected hash call, for example, keeps the algorithm choice in the same API family:
@@ -116,7 +116,7 @@ The full engineering policy and review checklist are documented in [Portability]
 
 ## Architecture
 
-Only headers under `inc/` form the installed public interface. Operation/category entry points dispatch into concrete implementations under `src/`, while shared bignum, ECC, endian, NTT, prime, and related utilities remain internal.
+Only headers under `inc/` form the source-tree public interface; installation places them under `include/LiberaCrypt/`. Operation/category entry points dispatch into concrete implementations under `src/`, while shared bignum, ECC, endian, NTT, prime, and related utilities remain internal.
 
 Platform-specific behavior is kept at explicit boundaries. Shared-library exports use a canonical public-symbol allowlist and the native export mechanism for the host platform.
 

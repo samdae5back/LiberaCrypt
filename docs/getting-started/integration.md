@@ -2,10 +2,10 @@
 
 ## Include the public API
 
-The installed target exposes the public include directory. Applications normally include the umbrella header:
+The installed target exposes the public include directory. Installed headers are namespaced below `LiberaCrypt/`, so applications normally include the umbrella header as:
 
 ```c
-#include <LiberaCrypt.h>
+#include <LiberaCrypt/LiberaCrypt.h>
 ```
 
 Public C functions, macros, constants, and algorithm selectors use the `LIBERAC_` prefix. Public type names use the `LiberaC` prefix.
@@ -25,13 +25,13 @@ LiberaCError error = LIBERAC_BLOCK_CIPHER_ENCRYPT(
     LIBERAC_ALG_AES_256_CTR);
 ```
 
-The complete selector set is declared in `inc/Def.h` and is available through `LiberaCrypt.h`.
+The complete selector set is declared in `inc/Def.h` in the source tree and is installed as `<LiberaCrypt/Def.h>`. It is also available through `<LiberaCrypt/LiberaCrypt.h>`.
 
 See [API overview](../api/overview.md) and [Algorithm selection](../api/algorithm-selection.md) for the dispatcher model and family boundaries.
 
 ## Public versus private implementation
 
-Only headers in `inc/` form the supported public API. Private declarations stay alongside their implementations under `src/`. Applications should not include internal headers or link against internal symbols.
+Only headers in `inc/` form the supported source-tree public API; installation places those headers under `include/LiberaCrypt/`. Private declarations stay alongside their implementations under `src/`. Applications should not include internal headers or link against internal symbols.
 
 Shared-library exports are restricted to the documented public API. Platform-specific export mechanisms are handled by the build system rather than exposed to consumers.
 

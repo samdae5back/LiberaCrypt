@@ -282,8 +282,9 @@ static int bignum_mul_noalias(LiberaCBignum *out,
     return 0;
 }
 
-int crypto_bignum_mul(LiberaCBignum *OUT, const LiberaCBignum *A,
-                      const LiberaCBignum *B) {
+int crypto_bignum_mul_schoolbook(LiberaCBignum *OUT,
+                                 const LiberaCBignum *A,
+                                 const LiberaCBignum *B) {
     LiberaCBignum tmp;
     int rc;
     if (!OUT || !A || !B) return -1;
@@ -687,17 +688,6 @@ fail2:
     crypto_bignum_free(&r);
     crypto_bignum_free(&tmp);
     return -1;
-}
-
-int crypto_bignum_mod_mul(LiberaCBignum *OUT, const LiberaCBignum *A, const LiberaCBignum *B, const LiberaCBignum *MODULUS) {
-    LiberaCBignum product;
-    int rc;
-    if (!OUT || !A || !B || !MODULUS || MODULUS->LENGTH == 0) return -1;
-    crypto_bignum_init(&product);
-    if (crypto_bignum_mul(&product, A, B) != 0) return -1;
-    rc = crypto_bignum_mod(OUT, &product, MODULUS);
-    crypto_bignum_free(&product);
-    return rc;
 }
 
 int crypto_bignum_mod_exp(LiberaCBignum *OUT, const LiberaCBignum *BASE, const LiberaCBignum *EXPONENT, const LiberaCBignum *MODULUS) {

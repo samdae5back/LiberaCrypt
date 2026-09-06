@@ -6,11 +6,10 @@
 #include "bignum_internal.h"
 
 /*
- * Keep the Stage-1/2 reduction routine in bignum.c, but make the externally
- * visible generic multiply-then-reduce helper use the Stage-3 multiplication
- * dispatch.  This preserves the exact Stage-2 schoolbook baseline symbol while
- * allowing large equal-width public operands (for example ElGamal arithmetic)
- * to benefit from the measured Karatsuba crossover.
+ * Keep generic reduction in bignum.c, but make the externally visible generic
+ * multiply-then-reduce helper use the production multiplication dispatcher.
+ * The source-level schoolbook function remains available as the measured
+ * fallback without relying on build-system symbol rewriting.
  */
 LiberaCError crypto_bignum_mod_mul(LiberaCBignum *out,
                                    const LiberaCBignum *a,
