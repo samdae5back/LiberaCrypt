@@ -49,6 +49,8 @@ jobs:
         run: cmake --build build --config Release
       - name: Test
         run: ctest --test-dir build -C Release --output-on-failure --parallel 2
+      - name: Create release package
+        run: cmake --build build --config Release --target package
       - name: Install package
         run: cmake --install build --config Release --prefix "${{ runner.temp }}/liberacrypt-install"
       - name: Configure installed-package consumer

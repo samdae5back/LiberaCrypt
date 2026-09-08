@@ -385,3 +385,5 @@ if(LIBERAC_BUILD_TESTS)
     add_subdirectory(tests/ECC)
     add_subdirectory(tests/KeyAgreement)
 endif()
+
+include(cmake/LiberaCryptPackaging.cmake)
